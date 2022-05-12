@@ -6,6 +6,7 @@ import BasketItem from '../components/BasketItem/BasketItem';
 import {clearBasket, deleteBookItem, plusItem, minusItem} from '../redux/actions/basketAC';
 import {pay} from '../redux/actions/balanceAC';
 import BasketEmpty from './BasketEmpty';
+import Swal from 'sweetalert2';
 
 const Basket = () => {
   const dispatch = useDispatch();
@@ -18,14 +19,36 @@ const Basket = () => {
   const balance = useSelector((state) => state.balance.balance)
 
   const onClickClearBasket = () => {
-    if (window.confirm('Вы действительно хотите очистить корзину?')) {
-      dispatch(clearBasket());
-    }
+    Swal.fire({
+      title: 'Вы действительно хотите очистить корзину?',
+      text: "Действие невозможно будет отменить!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#fe5f1e',
+      confirmButtonText: 'Да, очистить',
+      cancelButtonText:"Отмена"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearBasket())
+      }
+    })
   }
   const deleteBooks = (name) => {
-    if (window.confirm('Вы действительно хотите удалить пиццы из корзины?')) {
-      dispatch(deleteBookItem(name));
-    }
+    Swal.fire({
+      title: 'Вы действительно хотите удалить книги из корзины?',
+      text: "Действие невозможно будет отменить!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#fe5f1e',
+      confirmButtonText: 'Да, удалить',
+      cancelButtonText:"Отмена"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteBookItem(name));
+      }
+    })
   }
 
   const onBasketPlusItem = (name) => {

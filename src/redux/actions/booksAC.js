@@ -18,12 +18,6 @@ export const fetchBooks = (categoryId,str) => (dispatch) => {
   .then((data) => {
     dispatch(setBooks(data));
   })
-  // axios
-  // .get(`/pizzas?${
-  //   category !== null ? `category=${category}` : ''}&_sort=${sortBy.type}&_order=${sortBy.order}`)
-  //   .then(({ data }) => {
-  //     dispatch(setPizzas(data));
-  // })
 };
 
 

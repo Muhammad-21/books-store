@@ -62,17 +62,4 @@ const BasketItem = ({authorName, categoryId, coverUrl, name, price, totalCurrent
   )
 }
 
-// BasketItem.propTypes = {
-//   id: PropTypes.number,
-//   imageUrl: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   totalCurrentPrice: PropTypes.number,
-//   totalCurrentCount: PropTypes.number,
-//   size: PropTypes.number,
-//   type: PropTypes.string.isRequired,
-//   deletePizzas: PropTypes.func,
-//   onBasketMinusItem: PropTypes.func,
-//   onBasketPlusItem: PropTypes.func,
-// }
-
 export default BasketItem;

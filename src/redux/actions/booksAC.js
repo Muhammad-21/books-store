@@ -12,9 +12,9 @@ export const setBooks = (items) => ({
   payload: items,
 });
 
-export const fetchBooks = (category, sortBy) => (dispatch) => {
+export const fetchBooks = (categoryId,str) => (dispatch) => {
   dispatch(setLoading(false));
-  BooksService.getBooks()
+  BooksService.getBooks(categoryId,str)
   .then((data) => {
     dispatch(setBooks(data));
   })

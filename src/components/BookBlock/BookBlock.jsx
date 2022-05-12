@@ -14,12 +14,13 @@ import React from 'react';
     };
     onClickAddBook(bookObj);
   }
-
+  let url = ''
+  coverUrl[0] === '/' ? url = `http://45.8.249.57${coverUrl}` : url = coverUrl
   return (
     <div className="pizza-block">
       <img
         className="pizza-block__image"
-        src={`http://45.8.249.57${coverUrl}`}
+        src={url}
         alt="книга" />
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">

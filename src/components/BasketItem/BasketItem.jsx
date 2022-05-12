@@ -14,13 +14,14 @@ const BasketItem = ({authorName, categoryId, coverUrl, name, price, totalCurrent
   const minusItem = () => {
     onBasketPlusItem(name);
   }
-
+  let url = ''
+  coverUrl[0] === '/' ? url = `http://45.8.249.57${coverUrl}` : url = coverUrl
   return (
     <div className="cart__item">
       <div className="cart__item-img">
         <img
           className="pizza-block__image"
-          src={`http://45.8.249.57${coverUrl}`}
+          src={url}
           alt="Книга"
         />
       </div>

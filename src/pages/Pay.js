@@ -9,7 +9,7 @@ export default function Pay() {
     useEffect(() => {
         setTimeout(() => {
           navigate('/')
-        }, 3000)
+        }, 5000)
       }, [])
   return (
     <div>

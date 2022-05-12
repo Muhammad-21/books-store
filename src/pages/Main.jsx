@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Categories from '../components/Categories/Categories';
@@ -8,8 +8,9 @@ import PreLoader from '../components/BookBlock/PreLoader';
 import { setCategory, setSortBy } from '../redux/actions/filtersAC';
 import { fetchBooks } from '../redux/actions/booksAC';
 import { addBookToBasket } from '../redux/actions/basketAC';
+import BooksService from '../API/BooksService';
+import useDebounce from '../utils/useDebounce';
 
-const categoryNames = ['Дизайн', 'Управление проектами', 'Разработка', 'Тестирование'];
 const sortNames = [
   { name: 'умолчанию', type: 'popular', order: 'desc'},
   { name: 'цене', type: 'price', order: 'desc'},
@@ -17,16 +18,43 @@ const sortNames = [
 ];
 
 const Main = () => {
+  
+  const [categoriesObj, setCategoriesObj] = useState([])
   const dispatch = useDispatch();
   const items = useSelector(({ books }) => books.items);
   const basketItems = useSelector(({ basket }) => basket.items);
+
   const isLoading = useSelector(({ books }) => books.isLoading);
   const {category, sortBy} = useSelector(({ filters }) => filters);
-  
-  useEffect(() => dispatch(fetchBooks(category, sortBy)), [category, sortBy])
-  const onSelectCategory = useCallback((index) => {
-    dispatch(setCategory(index));
-  }, []);
+
+
+  const [search, setSearch] = useState('')
+  const debouncedSearchTerm = useDebounce(search,500)
+
+
+  useEffect(() => {
+    dispatch(fetchBooks())
+    BooksService.getCategories()
+    .then((data) => {
+      setCategoriesObj(data);
+    })
+    }, [])
+
+
+    useEffect(() => {
+      if(debouncedSearchTerm){
+        dispatch(fetchBooks(category,debouncedSearchTerm))
+      }else{
+        dispatch(fetchBooks(category,''))
+      }
+    },[debouncedSearchTerm])
+
+
+  const onSelectCategory = useCallback((id) => {
+    console.log(debouncedSearchTerm)
+    dispatch(setCategory(id));
+    dispatch(fetchBooks(id === null ? null : id, debouncedSearchTerm))
+  }, [debouncedSearchTerm]);
 
   const onSelectSortType = useCallback((name) => {
     dispatch(setSortBy(name));
@@ -36,6 +64,10 @@ const Main = () => {
     dispatch(addBookToBasket(obj));
   };
 
+  const handleSearch = (evt) => {
+    setSearch(evt.target.value)
+  }
+
   return (
     <div className="container">
       <div style={{fontSize:"25px"}}>
@@ -43,15 +75,15 @@ const Main = () => {
           <input
             className="input"
             placeholder="Введите название книги..." 
-            // value={this.state.input} 
-            // onChange={this.handleChange}
+            value={search} 
+            onChange={handleSearch}
           />
         </div>
       <div className="content__top">
         <Categories
           activeCategory={category}
           onClickCategory={onSelectCategory}
-          items={categoryNames} />
+          items={categoriesObj} />
         <SortPopup
           onClickSortType={onSelectSortType}
           activeSortType={sortBy.type}
@@ -64,6 +96,9 @@ const Main = () => {
         key={ obj.name } {...obj} />)
         : Array(12).fill(0).map((_, index) => <PreLoader key={index} />)}
       </div>
+        {
+          items.length === 0 && <div style={{fontSize:"20px",textAlign:"center"}}>Нет книг &#128532;</div>
+        }
     </div>
   )
 }

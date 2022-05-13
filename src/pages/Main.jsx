@@ -12,6 +12,7 @@ import BooksService from '../API/BooksService';
 import useDebounce from '../utils/useDebounce';
 import ScrollToTop from 'react-scroll-up';
 import up from '../assets/img/up.png';
+
 const sortNames = [
   { name: 'возрастанию', type: 'priceASC', order: 'ASC'},
   { name: 'убыванию', type: 'priceDESC', order: 'DESC'},
@@ -33,7 +34,7 @@ const Main = () => {
 
 
   useEffect(() => {
-    dispatch(fetchBooks(null,debouncedSearchTerm,'ASC'))
+    dispatch(fetchBooks(null, debouncedSearchTerm, sortBy.order))
     BooksService.getCategories()
     .then((data) => {
       setCategoriesObj(data);
@@ -45,21 +46,20 @@ const Main = () => {
       if(debouncedSearchTerm){
         dispatch(fetchBooks(category,debouncedSearchTerm,sortBy.order))
       }else{
-        dispatch(fetchBooks(category,''))
+        dispatch(fetchBooks(category,'',sortBy.order))
       }
     },[debouncedSearchTerm])
 
 
   const onSelectCategory = useCallback((id) => {
-    console.log(sortBy.order)
     dispatch(setCategory(id));
     dispatch(fetchBooks(id === null ? null : id, debouncedSearchTerm, sortBy.order))
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm,sortBy,category]);
 
   const onSelectSortType = useCallback((obj) => {
     dispatch(setSortBy(obj));
     dispatch(fetchBooks(category, debouncedSearchTerm, obj.order))
-  }, []);
+  }, [debouncedSearchTerm,sortBy,category]);
 
   const onClickAddBook = (obj) => {
     dispatch(addBookToBasket(obj));
@@ -68,11 +68,11 @@ const Main = () => {
   const handleSearch = (evt) => {
     setSearch(evt.target.value)
   }
-
+  
   return (
     <div className="container">
       <ScrollToTop showUnder={160}>
-        <img src={up}/>
+        <img src={up} style={{width:"50px", height:"50px"}}/>
       </ScrollToTop>
       <div style={{fontSize:"25px"}}>
         🔍

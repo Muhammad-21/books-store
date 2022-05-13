@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Basket from "./pages/Basket";
 import Header from "./components/Header/Header";
 import Main from "./pages/Main";
 import Pay from "./pages/Pay";
+import logo from './assets/img/logo.svg'
+import 'animate.css';
+import Welcome from "./pages/Welcome";
+
 
 const App = () => {
+  const [welcomeState, setWelcomeState] = useState(true);
+  setTimeout(() => {
+    setWelcomeState(false)
+  }, 2000);
 
   return (
+      welcomeState ? <Welcome/> :
     <div className="wrapper">
       <Header />
       <main className="content">

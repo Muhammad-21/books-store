@@ -3,7 +3,7 @@ import ContentLoader from "react-content-loader";
 
 const PreLoader = (props) => (
   <ContentLoader
-    className="pizza-block"
+    className="book-block"
     speed={2}
     width={280}
     height={460}

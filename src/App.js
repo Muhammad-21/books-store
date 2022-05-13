@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 
 import Basket from "./pages/Basket";
 import Header from "./components/Header/Header";
 import Main from "./pages/Main";
 import Pay from "./pages/Pay";
-import logo from './assets/img/logo.svg'
 import 'animate.css';
 import Welcome from "./pages/Welcome";
 
@@ -25,6 +24,7 @@ const App = () => {
         <Route exact path='/' element={<Main />} />
         <Route exact path='basket' element={<Basket />} />
         <Route exact path='pay' element={<Pay/>} />
+        <Route exact path='*' element={<Main/>} />
       </Routes>
       </main>
     </div>

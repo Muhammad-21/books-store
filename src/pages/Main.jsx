@@ -10,11 +10,11 @@ import { fetchBooks } from '../redux/actions/booksAC';
 import { addBookToBasket } from '../redux/actions/basketAC';
 import BooksService from '../API/BooksService';
 import useDebounce from '../utils/useDebounce';
-
+import ScrollToTop from 'react-scroll-up';
+import up from '../assets/img/up.png';
 const sortNames = [
-  { name: 'умолчанию', type: 'popular', order: 'desc'},
-  { name: 'цене', type: 'price', order: 'desc'},
-  { name: 'алфавиту', type: 'name', order: 'asc'},
+  { name: 'возрастанию', type: 'priceASC', order: 'ASC'},
+  { name: 'убыванию', type: 'priceDESC', order: 'DESC'},
 ];
 
 const Main = () => {
@@ -33,7 +33,7 @@ const Main = () => {
 
 
   useEffect(() => {
-    dispatch(fetchBooks())
+    dispatch(fetchBooks(null,debouncedSearchTerm,'ASC'))
     BooksService.getCategories()
     .then((data) => {
       setCategoriesObj(data);
@@ -43,7 +43,7 @@ const Main = () => {
 
     useEffect(() => {
       if(debouncedSearchTerm){
-        dispatch(fetchBooks(category,debouncedSearchTerm))
+        dispatch(fetchBooks(category,debouncedSearchTerm,sortBy.order))
       }else{
         dispatch(fetchBooks(category,''))
       }
@@ -51,13 +51,14 @@ const Main = () => {
 
 
   const onSelectCategory = useCallback((id) => {
-    console.log(debouncedSearchTerm)
+    console.log(sortBy.order)
     dispatch(setCategory(id));
-    dispatch(fetchBooks(id === null ? null : id, debouncedSearchTerm))
+    dispatch(fetchBooks(id === null ? null : id, debouncedSearchTerm, sortBy.order))
   }, [debouncedSearchTerm]);
 
-  const onSelectSortType = useCallback((name) => {
-    dispatch(setSortBy(name));
+  const onSelectSortType = useCallback((obj) => {
+    dispatch(setSortBy(obj));
+    dispatch(fetchBooks(category, debouncedSearchTerm, obj.order))
   }, []);
 
   const onClickAddBook = (obj) => {
@@ -70,6 +71,9 @@ const Main = () => {
 
   return (
     <div className="container">
+      <ScrollToTop showUnder={160}>
+        <img src={up}/>
+      </ScrollToTop>
       <div style={{fontSize:"25px"}}>
         🔍
           <input

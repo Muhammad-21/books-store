@@ -1,12 +1,13 @@
 import axios from "axios";
 
 export default class BooksService{
-    static async getBooks(id,str){
+    static async getBooks(id,str,sort){
         const response = await axios.post('http://45.8.249.57/bookstore-api/books',{
             header:'Content-Type: application/json',
                 filters:{
                     categoryId:id,
-                    search:str
+                    search:str,
+                    sortPrice:sort
                 }
         })
         return response.data

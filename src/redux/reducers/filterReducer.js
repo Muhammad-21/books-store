@@ -4,8 +4,9 @@ export const SET_CATEGORY = 'SET_CATEGORY';
 const initialState = {
   category: null,
   sortBy: {
-    type: 'popular',
-    order: 'desc,'
+    name: 'возрастанию',
+    type: 'priceASC',
+    order: 'ASC'
   },
 };
 

@@ -1,4 +1,4 @@
-# Books-store
+# 📚 Books-store
 
 ---
 
@@ -17,6 +17,6 @@ Project for participation in the [Sferum Summer Internship](https://prof-sferum.
 > npm install
 > npm start
 ```
-deployed here [books-store](https://muhammad-21.github.io/books-store/)
+deployed here: [books-store](https://muhammad-21.github.io/books-store/)
 
 ---

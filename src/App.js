@@ -5,7 +5,6 @@ import Basket from "./pages/Basket";
 import Header from "./components/Header/Header";
 import Main from "./pages/Main";
 import Pay from "./pages/Pay";
-import 'animate.css';
 import Welcome from "./pages/Welcome";
 
 

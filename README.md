@@ -17,6 +17,8 @@ Project for participation in the [Sferum Summer Internship](https://prof-sferum.
 > npm install
 > npm start
 ```
-deployed here: [books-store](https://muhammad-21.github.io/books-store/).(Пока что данные не отображаются так как сервер разработан на протоколе http 😐)
+deployed here: [books-store](https://muhammad-21.github.io/books-store/).
 
 ---
+
+(So far, the data is not displayed because the server is designed on the http protocol 😐)
